@@ -1,5 +1,6 @@
-from random import *
 
+from random import *
+from tkinter import *
 spawnrate1 = 80
 spawnrate2 = 90
 spawnrate3 = 99
@@ -33,7 +34,6 @@ class Defender():
                 if  battlefield[ (i*5) + int(column)].health == 0:
                     battlefield[ (i*5) + int(column)] = 0
                     self.kill_count +=1
-
 
 def get_battlefield():
     battlefield_display = []
@@ -79,6 +79,33 @@ def check_lose_condition():
             print ('The castle has been lost.')
             print ('You have slain ' + str(mitchell.kill_count) + ' enemies.')
             break
+
+root = Tk()
+root.title('The Defense of Demacia.')
+
+def get_map():
+    for item in range(8):
+        column_count = 0 + item
+        for i in range(5):
+            if battlefield[i+(column_count *5) ] != 0:
+                label = Label(text = str(battlefield[i+(column_count *5)].health))
+                label.grid(column = i, row = item)
+            else:
+                label = Label(text = '0')
+                label.grid(column = i, row = item)
+    root.update()
+
+def play_game():
+    while battlefield[35] == 0 and battlefield[36] == 0 and battlefield[37] == 0 and battlefield[38] == 0 and  battlefield[39] == 0:
+        spawn()
+        get_map()
+        get_move()
+        move_team()
+        check_lose_condition()
+    root.mainloop()
+
+play_game()
+
 
 while battlefield[35] == 0 and battlefield[36] == 0 and battlefield[37] == 0 and battlefield[38] == 0 and  battlefield[39] == 0:
     spawn()
