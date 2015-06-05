@@ -1,4 +1,5 @@
 
+
 from random import *
 from tkinter import *
 spawnrate1 = 80
@@ -34,6 +35,18 @@ class Defender():
                 if  battlefield[ (i*5) + int(column)].health == 0:
                     battlefield[ (i*5) + int(column)] = 0
                     self.kill_count +=1
+        move_team()
+        spawn()
+        for item in range(8):
+            column_count = 0 + item
+            for i in range(5):
+                if battlefield[i+(column_count *5) ] != 0:
+                    label = Label(text = battlefield[i+(column_count *5)].health)
+                    label.grid(column = i, row = item)
+                else:
+                    label = Label(text = '_')
+                    label.grid(column = i, row = item)
+        print('I just attacked')
 
 def get_battlefield():
     battlefield_display = []
@@ -51,6 +64,7 @@ def get_battlefield():
         print (battlefield_display[lower:upper])
         lower += 5
         upper +=5
+
 def spawn():
     for i in range (5):
         spawn_check = randint(0,100)
@@ -80,37 +94,48 @@ def check_lose_condition():
             print ('You have slain ' + str(mitchell.kill_count) + ' enemies.')
             break
 
+
+def column_strike_0():
+    mitchell.column_strike(0)
+def column_strike_1():
+    mitchell.column_strike(1)
+def column_strike_2():
+    mitchell.column_strike(2)
+def column_strike_3():
+    mitchell.column_strike(3)
+def column_strike_4():
+    mitchell.column_strike(4)
+
 root = Tk()
-root.title('The Defense of Demacia.')
-
-def get_map():
-    for item in range(8):
-        column_count = 0 + item
-        for i in range(5):
-            if battlefield[i+(column_count *5) ] != 0:
-                label = Label(text = str(battlefield[i+(column_count *5)].health))
-                label.grid(column = i, row = item)
-            else:
-                label = Label(text = '0')
-                label.grid(column = i, row = item)
-    root.update()
-
-def play_game():
-    while battlefield[35] == 0 and battlefield[36] == 0 and battlefield[37] == 0 and battlefield[38] == 0 and  battlefield[39] == 0:
-        spawn()
-        get_map()
-        get_move()
-        move_team()
-        check_lose_condition()
-    root.mainloop()
-
-play_game()
+root.title('The Defense of Valaria')
+root.geometry("250x250")
 
 
-while battlefield[35] == 0 and battlefield[36] == 0 and battlefield[37] == 0 and battlefield[38] == 0 and  battlefield[39] == 0:
-    spawn()
-    get_battlefield()
-    get_move()
-    move_team()
-    check_lose_condition()
+for item in range(8):
+            column_count = 0 + item
+            for i in range(5):
+                if battlefield[i+(column_count *5) ] != 0:
+                    label = Label(text = battlefield[i+(column_count *5)].health)
+                    label.grid(column = i, row = item)
+                else:
+                    label = Label(text = '_')
+                    label.grid(column = i, row = item)
+button1 = Button(root, text = 'x', command = column_strike_0)
+button1.grid(column = 0, row = 9)
 
+button2 = Button(root, text = 'x', command = column_strike_1)
+button2.grid(column = 1, row = 9)
+
+button3 = Button(root, text = 'x', command = column_strike_2)
+button3.grid(column = 2, row = 9)
+
+button4 = Button(root, text = 'x', command = column_strike_3)
+button4.grid(column = 3, row = 9)
+
+button5 = Button(root, text = 'x', command = column_strike_4)
+button5.grid(column = 4, row = 9)
+
+
+spawn()
+get_battlefield()
+root.mainloop()
